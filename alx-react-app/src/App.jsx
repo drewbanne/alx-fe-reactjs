@@ -4,15 +4,16 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 
-// Import the WelcomeMessage component (from the previous assignment).
+// Import the WelcomeMessage component.
 import WelcomeMessage from './components/WelcomeMessage'
 
-// Import the new Header component.
+// Import the Header, MainContent, and Footer components.
 import Header from './components/Header';
-// Import the new MainContent component.
 import MainContent from './components/MainContent';
-// Import the new Footer component.
 import Footer from './components/Footer';
+
+// Import the new UserProfile component.
+import UserProfile from './components/UserProfile';
 
 import './App.css'
 
@@ -21,15 +22,27 @@ function App() {
 
   return (
     <>
-      {/* Render the WelcomeMessage component from the previous assignment. */}
-      {/* You can remove this or keep it, depending on if the assignment implies replacing or adding.
-          For this assignment, we'll keep it as it doesn't explicitly say to remove it. */}
+      {/* Render the WelcomeMessage component */}
       <WelcomeMessage name="ALX Student" />
 
-      {/* Render the new components in the specified order: Header, MainContent, Footer. */}
+      {/* Render the Header, MainContent, and Footer components. */}
       <Header />
       <MainContent />
       <Footer />
+
+      {/* Render the new UserProfile component and pass it data via props. */}
+      {/* You can change the values for name, age, and bio as you like! */}
+      <UserProfile
+        name="Alice"
+        age="25"
+        bio="Loves hiking and photography"
+      />
+      {/* You can even add another UserProfile with different data! */}
+      <UserProfile
+        name="Bob"
+        age="30"
+        bio="Enjoys coding and gaming"
+      />
 
       {/* The rest of the content is from the default Vite + React template. */}
       <div>
