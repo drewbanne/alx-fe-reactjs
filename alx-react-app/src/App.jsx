@@ -1,34 +1,35 @@
 // src/App.jsx
 
-// Import the useState hook from React. This is used for managing component state.
-// Although not directly used in this specific modification, it's often present in Vite's default App.jsx.
 import { useState } from 'react'
-
-// Import the React logo SVG. This is also part of Vite's default setup.
 import reactLogo from './assets/react.svg'
-// Import the Vite logo SVG.
 import viteLogo from '/vite.svg'
 
-// Import the new WelcomeMessage component.
-// The path './WelcomeMessage' refers to the WelcomeMessage.jsx file in the same directory.
-import WelcomeMessage from './WelcomeMessage'
+// Import the WelcomeMessage component (from the previous assignment).
+import WelcomeMessage from './components/WelcomeMessage'
 
-// Import the CSS file for styling the App component.
+// Import the new Header component.
+import Header from './components/Header';
+// Import the new MainContent component.
+import MainContent from './components/MainContent';
+// Import the new Footer component.
+import Footer from './components/Footer';
+
 import './App.css'
 
-// Define the main App functional component.
 function App() {
-  // useState hook for managing a counter.
-  // The first element `count` is the current state value.
-  // The second element `setCount` is a function to update the state.
   const [count, setCount] = useState(0)
 
-  // The return statement contains the JSX that defines the UI of the App component.
   return (
     <>
-      {/* Render the WelcomeMessage component here. */}
-      {/* This is how you use a custom React component within another component's JSX. */}
-      <WelcomeMessage />
+      {/* Render the WelcomeMessage component from the previous assignment. */}
+      {/* You can remove this or keep it, depending on if the assignment implies replacing or adding.
+          For this assignment, we'll keep it as it doesn't explicitly say to remove it. */}
+      <WelcomeMessage name="ALX Student" />
+
+      {/* Render the new components in the specified order: Header, MainContent, Footer. */}
+      <Header />
+      <MainContent />
+      <Footer />
 
       {/* The rest of the content is from the default Vite + React template. */}
       <div>
@@ -55,5 +56,4 @@ function App() {
   )
 }
 
-// Export the App component as the default export, making it the main component of your application.
 export default App
