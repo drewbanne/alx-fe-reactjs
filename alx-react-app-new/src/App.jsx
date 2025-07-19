@@ -4,45 +4,42 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 
-// Import the WelcomeMessage component.
+// Import existing components
 import WelcomeMessage from './components/WelcomeMessage'
-
-// Import the Header, MainContent, and Footer components.
 import Header from './components/Header';
 import MainContent from './components/MainContent';
 import Footer from './components/Footer';
-
-// Import the new UserProfile component.
 import UserProfile from './components/UserProfile';
+
+// Import the new Counter component.
+import Counter from './components/Counter';
 
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0) // This useState is from the default Vite template, not directly related to the new Counter component.
 
   return (
     <>
-      {/* Render the WelcomeMessage component */}
+      {/* Render existing components */}
       <WelcomeMessage name="ALX Student" />
-
-      {/* Render the Header, MainContent, and Footer components. */}
       <Header />
       <MainContent />
       <Footer />
-
-      {/* Render the new UserProfile component and pass it data via props. */}
-      {/* You can change the values for name, age, and bio as you like! */}
       <UserProfile
         name="Alice"
         age="25"
         bio="Loves hiking and photography"
       />
-      {/* You can even add another UserProfile with different data! */}
       <UserProfile
         name="Bob"
         age="30"
         bio="Enjoys coding and gaming"
       />
+
+      {/* Render the new Counter component here. */}
+      {/* This will display your interactive counter. */}
+      <Counter />
 
       {/* The rest of the content is from the default Vite + React template. */}
       <div>
@@ -70,3 +67,4 @@ function App() {
 }
 
 export default App
+
