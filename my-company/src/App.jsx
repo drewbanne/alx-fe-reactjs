@@ -7,11 +7,13 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 // Import the Navbar component.
 import Navbar from './components/Navbar';
 
-// Import the page components.
+// Import the page components from their new or correct locations.
+// Home, About, Services are still in 'pages'
 import Home from './pages/Home';
 import About from './pages/About';
 import Services from './pages/Services';
-import Contact from './pages/Contact';
+// Contact is now imported from 'components'
+import Contact from './components/Contact';
 
 // Import the global CSS (if any, though we're using inline for this assignment).
 import './App.css'; // Keep this if you have any global styles, otherwise you can remove it.
@@ -50,5 +52,3 @@ function App() {
     </BrowserRouter>
   );
 }
-
-export default App;
