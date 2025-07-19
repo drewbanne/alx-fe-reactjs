@@ -1,21 +1,28 @@
 // src/components/UserProfile.jsx
 
 // Define the UserProfile functional component.
-// This component takes 'props' as an argument, which will contain
-// the name, age, and bio information passed from the parent component (App.jsx).
 const UserProfile = (props) => {
   return (
-    // A div to wrap the user profile information.
-    <div>
-      {/* Display the user's name using the 'name' prop */}
-      <h2>{props.name}</h2>
-      {/* Display the user's age using the 'age' prop */}
-      <p>Age: {props.age}</p>
-      {/* Display the user's bio using the 'bio' prop */}
-      <p>Bio: {props.bio}</p>
+    // Styling the main container div for the user profile card.
+    <div style={{
+      border: '1px solid #ddd',
+      borderRadius: '8px',
+      padding: '20px',
+      margin: '20px auto', // Center the card horizontally
+      maxWidth: '300px', // Limit width for better appearance
+      boxShadow: '0 4px 8px rgba(0,0,0,0.1)', // Subtle shadow
+      backgroundColor: '#f9f9f9'
+    }}>
+      {/* Styling the name heading */}
+      <h2 style={{ color: '#0056b3', marginBottom: '10px' }}>{props.name}</h2>
+      {/* Styling the age paragraph */}
+      <p style={{ fontSize: '1.1em', marginBottom: '5px' }}>
+        Age: <span style={{ fontWeight: 'bold', color: '#333' }}>{props.age}</span>
+      </p>
+      {/* Styling the bio paragraph */}
+      <p style={{ fontSize: '0.95em', color: '#555', lineHeight: '1.5' }}>
+        Bio: {props.bio}
+      </p>
     </div>
   );
 };
-
-// Export the UserProfile component as the default export.
-export default UserProfile;

@@ -1,16 +1,16 @@
 // src/components/Header.jsx
 
 // Define the Header functional component.
-// This component is responsible for rendering the header section of your application.
 function Header() {
   return (
-    // The <header> HTML element is used semantically for introductory content or navigational links.
-    <header>
-      {/* The main heading for the application */}
+    // Applying inline CSS using a JavaScript object.
+    // CSS property names become camelCase (e.g., 'backgroundColor').
+    // Values are strings.
+    <header style={{ backgroundColor: 'navy', color: 'white', textAlign: 'center', padding: '20px 0', borderRadius: '8px 8px 0 0' }}>
       <h1>My Favorite Cities</h1>
     </header>
   );
 }
 
-// Export the Header component as the default export, making it available for import in other files.
+// Export the Header component.
 export default Header;

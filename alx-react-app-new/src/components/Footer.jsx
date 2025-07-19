@@ -1,13 +1,18 @@
 // src/components/Footer.jsx
 
 // Define the Footer functional component.
-// This component is typically used for copyright information, navigation, or contact details.
 function Footer() {
   return (
-    // The <footer> HTML element represents a footer for its nearest sectioning content or sectioning root element.
-    <footer>
-      {/* Copyright information */}
-      <p>© 2023 City Lovers</p>
+    // Styling the footer area.
+    <footer style={{
+      backgroundColor: '#333',
+      color: 'white',
+      textAlign: 'center',
+      padding: '15px 0',
+      marginTop: '20px',
+      borderRadius: '0 0 8px 8px'
+    }}>
+      <p style={{ fontSize: '0.9em', margin: '0' }}>© 2023 City Lovers</p>
     </footer>
   );
 }
