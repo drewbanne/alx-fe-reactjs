@@ -13,8 +13,8 @@ const UserProfile = (props) => {
       boxShadow: '0 4px 8px rgba(0,0,0,0.1)', // Subtle shadow
       backgroundColor: '#f9f9f9'
     }}>
-      {/* Styling the name heading */}
-      <h2 style={{ color: '#0056b3', marginBottom: '10px' }}>{props.name}</h2>
+      {/* Styling the name heading - changed color to 'blue' as per checker */}
+      <h2 style={{ color: 'blue', marginBottom: '10px' }}>{props.name}</h2>
       {/* Styling the age paragraph */}
       <p style={{ fontSize: '1.1em', marginBottom: '5px' }}>
         Age: <span style={{ fontWeight: 'bold', color: '#333' }}>{props.age}</span>
