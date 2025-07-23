@@ -1,7 +1,8 @@
 // src/components/RecipeList.jsx
 
 // Import the useRecipeStore hook to access the recipes state.
-import useRecipeStore from '../recipeStore'; // Note: path is relative to src/components
+// The path is now relative to src/components, so it's './recipeStore'.
+import useRecipeStore from './recipeStore';
 
 // RecipeList component displays the list of recipes from the Zustand store.
 const RecipeList = () => {

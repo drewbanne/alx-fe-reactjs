@@ -2,7 +2,8 @@
 
 import React, { useState } from 'react';
 // Import the useRecipeStore hook to access the addRecipe action.
-import useRecipeStore from '../recipeStore'; // Note: path is relative to src/components
+// The path is now relative to src/components, so it's './recipeStore'.
+import useRecipeStore from './recipeStore';
 
 // AddRecipeForm component allows users to add new recipes.
 const AddRecipeForm = () => {
