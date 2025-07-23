@@ -1,46 +1,53 @@
-// src/components/RecipeList.jsx
+// src/App.jsx
 
-// Import the useRecipeStore hook to access the recipes state.
-// The path is now relative to src/components, so it's './recipeStore'.
-import useRecipeStore from './recipeStore';
+import React from 'react';
+// Import BrowserRouter, Routes, and Route for routing.
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-// RecipeList component displays the list of recipes from the Zustand store.
-const RecipeList = () => {
-  // Select the 'recipes' array from the store's state.
-  const recipes = useRecipeStore((state) => state.recipes);
+// Import the components we've created.
+import RecipeList from './components/RecipeList';
+import AddRecipeForm from './components/AddRecipeForm';
+import RecipeDetails from './components/RecipeDetails'; // Import the new RecipeDetails component
 
+// Import global CSS (if any, though we're using inline styles).
+import './App.css';
+
+function App() {
   return (
-    <div style={{
-      marginTop: '30px',
-      padding: '20px',
-      border: '1px solid #e0e0e0',
-      borderRadius: '8px',
-      backgroundColor: '#ffffff',
-      boxShadow: '0 4px 12px rgba(0,0,0,0.05)'
-    }}>
-      <h2 style={{ color: '#333', borderBottom: '2px solid #4CAF50', paddingBottom: '10px', marginBottom: '20px' }}>
-        Available Recipes
-      </h2>
-      {recipes.length === 0 ? (
-        <p style={{ color: '#666', fontStyle: 'italic' }}>No recipes added yet. Add some!</p>
-      ) : (
-        <div style={{ display: 'grid', gap: '20px', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}>
-          {recipes.map((recipe) => (
-            <div key={recipe.id} style={{
-              border: '1px solid #c8e6c9',
-              borderRadius: '8px',
-              padding: '15px',
-              backgroundColor: '#e8f5e9',
-              boxShadow: '0 2px 5px rgba(0,0,0,0.1)'
-            }}>
-              <h3 style={{ color: '#388e3c', marginBottom: '10px', fontSize: '1.4em' }}>{recipe.title}</h3>
-              <p style={{ color: '#555', fontSize: '0.95em', lineHeight: '1.5' }}>{recipe.description}</p>
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-};
+    // BrowserRouter enables client-side routing.
+    <BrowserRouter>
+      <div style={{
+        fontFamily: 'Inter, sans-serif',
+        maxWidth: '900px',
+        margin: '0 auto',
+        padding: '20px',
+        backgroundColor: '#f4f7f6',
+        minHeight: '100vh',
+        boxShadow: '0 0 15px rgba(0,0,0,0.1)'
+      }}>
+        <h1 style={{ textAlign: 'center', color: '#2c3e50', marginBottom: '40px', fontSize: '2.8em' }}>
+          Recipe Sharing Application
+        </h1>
 
-export default RecipeList;
+        {/* Routes define the different paths and their corresponding components. */}
+        <Routes>
+          {/* Route for the main page (RecipeList and AddRecipeForm) */}
+          <Route
+            path="/"
+            element={
+              <>
+                <AddRecipeForm />
+                <RecipeList />
+              </>
+            }
+          />
+          {/* Route for individual recipe details.
+              :recipeId is a URL parameter that will be available via useParams hook. */}
+          <Route path="/recipes/:recipeId" element={<RecipeDetails />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
+  );
+}
+
+export default App;

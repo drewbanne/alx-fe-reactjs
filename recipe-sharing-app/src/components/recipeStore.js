@@ -1,4 +1,4 @@
-// src/recipeStore.js
+// src/components/recipeStore.js
 
 // Import the 'create' function from zustand to define our store.
 import { create } from 'zustand';
@@ -9,17 +9,27 @@ const useRecipeStore = create((set) => ({
   // 'recipes' is the state variable, initialized as an empty array.
   recipes: [],
 
-  // 'addRecipe' is an action (a function) that updates the 'recipes' state.
-  // It takes a 'newRecipe' object as an argument.
-  // 'set' is the function provided by Zustand to update the state.
-  // We use a functional update (state => ...) to ensure we're working with the latest state.
+  // 'addRecipe' action: adds a new recipe to the existing array.
   addRecipe: (newRecipe) =>
     set((state) => ({
-      recipes: [...state.recipes, newRecipe], // Add the new recipe to the existing array.
+      recipes: [...state.recipes, newRecipe],
     })),
 
-  // 'setRecipes' is an action to completely replace the recipes array.
-  // This could be useful for initializing recipes from an API or local storage.
+  // 'deleteRecipe' action: removes a recipe by its ID.
+  deleteRecipe: (idToDelete) =>
+    set((state) => ({
+      recipes: state.recipes.filter((recipe) => recipe.id !== idToDelete),
+    })),
+
+  // 'updateRecipe' action: finds a recipe by ID and updates its properties.
+  updateRecipe: (updatedRecipe) =>
+    set((state) => ({
+      recipes: state.recipes.map((recipe) =>
+        recipe.id === updatedRecipe.id ? updatedRecipe : recipe
+      ),
+    })),
+
+  // 'setRecipes' action: completely replaces the recipes array (useful for initialization).
   setRecipes: (recipes) => set({ recipes }),
 }));
 
