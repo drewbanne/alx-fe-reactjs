@@ -1,16 +1,16 @@
 // src/App.jsx
 
 import React from 'react';
-// Import BrowserRouter, Routes, and Route for routing.
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-// Import the components we've created.
+// Import the components.
 import RecipeList from './components/RecipeList';
 import AddRecipeForm from './components/AddRecipeForm';
 import RecipeDetails from './components/RecipeDetails';
-import SearchBar from './components/SearchBar'; // Import the new SearchBar component
+import SearchBar from './components/SearchBar';
+import FavoritesList from './components/FavoritesList'; // Import the new FavoritesList
+import RecommendationsList from './components/RecommendationsList'; // Import the new RecommendationsList
 
-// Import global CSS (if any, though we're using inline styles).
 import './App.css';
 
 function App() {
@@ -35,8 +35,11 @@ function App() {
             element={
               <>
                 <AddRecipeForm />
-                <SearchBar /> {/* Render the SearchBar here */}
+                <SearchBar />
                 <RecipeList />
+                {/* Render FavoritesList and RecommendationsList on the home page */}
+                <FavoritesList />
+                <RecommendationsList />
               </>
             }
           />

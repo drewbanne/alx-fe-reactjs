@@ -1,26 +1,35 @@
 // src/components/RecipeList.jsx
 
-import React, { useEffect } from 'react'; // Import useEffect
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import useRecipeStore from './recipeStore'; // Import the store
 
 // RecipeList component displays the list of recipes from the Zustand store.
 const RecipeList = () => {
-  // Select the 'filteredRecipes' array from the store's state.
+  // Select filtered recipes, filter action, and favorite actions from the store.
   const filteredRecipes = useRecipeStore((state) => state.filteredRecipes);
-  // Also get the filterRecipes action to trigger filtering on initial load/state changes.
   const filterRecipes = useRecipeStore((state) => state.filterRecipes);
-  // Get the raw recipes and searchTerm to trigger filterRecipes when they change.
   const recipes = useRecipeStore((state) => state.recipes);
   const searchTerm = useRecipeStore((state) => state.searchTerm);
+  const favorites = useRecipeStore((state) => state.favorites); // Get favorites state
+  const addFavorite = useRecipeStore((state) => state.addFavorite);
+  const removeFavorite = useRecipeStore((state) => state.removeFavorite);
 
 
   // Use useEffect to trigger filtering whenever recipes or searchTerm change.
-  // This ensures the filtered list is always up-to-date.
   useEffect(() => {
     filterRecipes();
-  }, [recipes, searchTerm, filterRecipes]); // Dependencies: recipes, searchTerm, and filterRecipes action itself.
+  }, [recipes, searchTerm, filterRecipes]);
 
+
+  // Function to toggle favorite status
+  const toggleFavorite = (recipeId) => {
+    if (favorites.includes(recipeId)) {
+      removeFavorite(recipeId);
+    } else {
+      addFavorite(recipeId);
+    }
+  };
 
   return (
     <div style={{
@@ -50,19 +59,36 @@ const RecipeList = () => {
             }}>
               <h3 style={{ color: '#388e3c', marginBottom: '10px', fontSize: '1.4em' }}>{recipe.title}</h3>
               <p style={{ color: '#555', fontSize: '0.95em', lineHeight: '1.5' }}>{recipe.description}</p>
-              <Link to={`/recipes/${recipe.id}`} style={{
-                display: 'inline-block',
-                marginTop: '10px',
-                padding: '8px 15px',
-                backgroundColor: '#007bff',
-                color: 'white',
-                textDecoration: 'none',
-                borderRadius: '5px',
-                fontSize: '0.9em',
-                transition: 'background-color 0.3s ease'
-              }}>
-                View Details
-              </Link>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '10px' }}>
+                <Link to={`/recipes/${recipe.id}`} style={{
+                  display: 'inline-block',
+                  padding: '8px 15px',
+                  backgroundColor: '#007bff',
+                  color: 'white',
+                  textDecoration: 'none',
+                  borderRadius: '5px',
+                  fontSize: '0.9em',
+                  transition: 'background-color 0.3s ease'
+                }}>
+                  View Details
+                </Link>
+                {/* Favorite Button */}
+                <button
+                  onClick={() => toggleFavorite(recipe.id)}
+                  style={{
+                    padding: '8px 15px',
+                    backgroundColor: favorites.includes(recipe.id) ? '#ffeb3b' : '#f0f0f0', // Yellow if favorited
+                    color: favorites.includes(recipe.id) ? '#333' : '#666',
+                    border: '1px solid #ccc',
+                    borderRadius: '5px',
+                    cursor: 'pointer',
+                    fontSize: '0.9em',
+                    transition: 'background-color 0.3s ease, color 0.3s ease'
+                  }}
+                >
+                  {favorites.includes(recipe.id) ? '❤️ Favorited' : '🤍 Favorite'}
+                </button>
+              </div>
             </div>
           ))}
         </div>
