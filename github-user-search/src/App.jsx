@@ -1,49 +1,99 @@
-// src/App.jsx
-
-import React from 'react';
-import './App.css'; // Keep default CSS or remove if not needed
+import React, { useState } from 'react';
+import SearchBar from './components/SearchBar';
+import { fetchUser, fetchUserRepos } from './services/githubService';
+import './App.css';
 
 function App() {
+  const [user, setUser] = useState(null);
+  const [repos, setRepos] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const handleSearch = async (username) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const userData = await fetchUser(username);
+      const reposData = await fetchUserRepos(username);
+      setUser(userData);
+      setRepos(reposData);
+    } catch (err) {
+      setError(err.message);
+      setUser(null);
+      setRepos([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <div style={{
-      fontFamily: 'Inter, sans-serif',
-      maxWidth: '800px',
-      margin: '0 auto',
-      padding: '20px',
-      backgroundColor: '#f8f9fa',
-      minHeight: '100vh',
-      boxShadow: '0 0 15px rgba(0,0,0,0.1)'
-    }}>
-      <header style={{
-        textAlign: 'center',
-        marginBottom: '30px',
-        paddingBottom: '15px',
-        borderBottom: '2px solid #e0e0e0'
-      }}>
-        <h1 style={{ color: '#2c3e50', fontSize: '2.5em', marginBottom: '10px' }}>
-          GitHub User Search
-        </h1>
-        <p style={{ color: '#6c757d', fontSize: '1.1em' }}>
-          Find GitHub profiles quickly and easily.
-        </p>
+    <div className="app-container">
+      <header className="app-header">
+        <h1>GitHub User Search</h1>
+        <p>Search for GitHub users and view their profiles</p>
       </header>
 
-      <main>
-        {/* This is where your SearchBar and UserProfile components will go */}
-        <p style={{ textAlign: 'center', color: '#34495e', marginTop: '50px' }}>
-          Application setup complete. Ready for search functionality!
-        </p>
+      <main className="app-main">
+        <SearchBar onSearch={handleSearch} />
+        
+        {loading && <p className="loading-message">Loading...</p>}
+        
+        {error && (
+          <p className="error-message">{error}</p>
+        )}
+
+        {user && (
+          <div className="user-profile">
+            <div className="profile-header">
+              <img 
+                src={user.avatar_url} 
+                alt={`${user.login}'s avatar`}
+                className="avatar"
+              />
+              <div className="profile-info">
+                <h2>{user.name || user.login}</h2>
+                <p>{user.bio || 'No bio available'}</p>
+                <div className="stats">
+                  <span>Followers: {user.followers}</span>
+                  <span>Following: {user.following}</span>
+                  <span>Repos: {user.public_repos}</span>
+                </div>
+                <a 
+                  href={user.html_url} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="profile-link"
+                >
+                  View on GitHub
+                </a>
+              </div>
+            </div>
+
+            <div className="repositories">
+              <h3>Top Repositories</h3>
+              {repos.slice(0, 5).map(repo => (
+                <div key={repo.id} className="repo-card">
+                  <a 
+                    href={repo.html_url} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                  >
+                    {repo.name}
+                  </a>
+                  <p>{repo.description || 'No description'}</p>
+                  <div className="repo-stats">
+                    <span>⭐ {repo.stargazers_count}</span>
+                    <span>🍴 {repo.forks_count}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </main>
 
-      <footer style={{
-        textAlign: 'center',
-        marginTop: '50px',
-        paddingTop: '20px',
-        borderTop: '1px solid #e0e0e0',
-        color: '#6c757d',
-        fontSize: '0.9em'
-      }}>
-        <p>&copy; {new Date().getFullYear()} GitHub User Search App</p>
+      <footer className="app-footer">
+        <p>Created by drewbanne</p>
       </footer>
     </div>
   );
