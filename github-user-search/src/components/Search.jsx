@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { searchUsers } from '../services/githubService';
+import { fetchUserData, searchUsers } from '../services/githubService';
 
 const Search = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -16,8 +16,15 @@ const Search = () => {
     setUsers([]);
     
     try {
-      const results = await searchUsers(searchTerm);
-      setUsers(results);
+      // First try exact match using fetchUserData
+      try {
+        const userData = await fetchUserData(searchTerm);
+        setUsers([userData]);
+      } catch (exactMatchError) {
+        // If exact match fails, fall back to searchUsers
+        const results = await searchUsers(searchTerm);
+        setUsers(results);
+      }
     } catch (err) {
       setError(err.message);
     } finally {
@@ -40,10 +47,8 @@ const Search = () => {
         </button>
       </form>
 
-      {/* Explicit && operator for loading state */}
       {loading && <div className="loading">Loading...</div>}
 
-      {/* Explicit && operator for error state */}
       {error && (
         <div className="error">
           {error.includes('not found') 
@@ -52,7 +57,6 @@ const Search = () => {
         </div>
       )}
 
-      {/* Explicit map function for results */}
       {users.length > 0 && (
         <div className="results">
           <h2>Search Results</h2>
