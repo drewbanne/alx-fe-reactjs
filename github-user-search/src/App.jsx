@@ -1,21 +1,23 @@
 import React from 'react';
-import Search from './components/Search';
-import './App.css';
+import AdvancedSearch from './components/AdvancedSearch';
 
 function App() {
   return (
-    <div className="app-container">
-      <header className="app-header">
-        <h1>GitHub User Search</h1>
-        <p>Find any GitHub user by their username</p>
+    <div className="min-h-screen bg-gray-100">
+      <header className="bg-white shadow">
+        <div className="max-w-4xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+          <h1 className="text-3xl font-bold text-gray-900">GitHub User Search</h1>
+        </div>
       </header>
 
-      <main className="app-main">
-        <Search />
+      <main className="max-w-4xl mx-auto py-6 sm:px-6 lg:px-8">
+        <AdvancedSearch />
       </main>
 
-      <footer className="app-footer">
-        <p>Search GitHub users with React</p>
+      <footer className="bg-white shadow mt-8">
+        <div className="max-w-4xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
+          <p className="text-center text-gray-500">GitHub User Search App</p>
+        </div>
       </footer>
     </div>
   );
