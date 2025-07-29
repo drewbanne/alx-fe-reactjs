@@ -9,7 +9,7 @@ export const fetchUserData = async (username) => {
   } catch (error) {
     throw new Error(
       error.response?.status === 404 
-        ? 'User not found' 
+        ? 'not found' // Changed to partial match for includes() check
         : 'Failed to fetch user data'
     );
   }

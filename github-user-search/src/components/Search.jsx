@@ -53,7 +53,7 @@ const Search = () => {
 
       {error && (
         <div className="status-message error">
-          <p>{error.includes('not found') ? 'User not found' : 'Error fetching data'}</p>
+          <p>{error.includes('not found') ? 'Looks like we cant find the user' : 'Error fetching data'}</p>
         </div>
       )}
 
