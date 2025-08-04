@@ -1,24 +1,73 @@
-import React from 'react';
-import AdvancedSearch from './components/AdvancedSearch';
+// src/App.jsx
+
+import React, { useState } from 'react';
+import './App.css';
+
+// Import the new components and the API service.
+import SearchForm from './components/SearchForm';
+import SearchResults from './components/SearchResults';
+import { searchUsers } from './services/githubService';
 
 function App() {
+  // State for search results, loading status, and any errors.
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  // Handle the search when the SearchForm is submitted.
+  const handleSearch = async (query, location, minRepos) => {
+    setLoading(true);
+    setError(null);
+    setUsers([]); // Clear previous results
+
+    try {
+      const results = await searchUsers(query, location, minRepos);
+      setUsers(results);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-gray-100">
-      <header className="bg-white shadow">
-        <div className="max-w-4xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold text-gray-900">GitHub User Search</h1>
-        </div>
-      </header>
+    <div className="min-h-screen bg-gray-100 p-8 font-sans">
+      <div className="max-w-4xl mx-auto">
+        <header className="text-center mb-8">
+          <h1 className="text-4xl font-extrabold text-gray-800">
+            GitHub User Search
+          </h1>
+          <p className="mt-2 text-lg text-gray-600">
+            Find GitHub profiles with advanced search criteria.
+          </p>
+        </header>
 
-      <main className="max-w-4xl mx-auto py-6 sm:px-6 lg:px-8">
-        <AdvancedSearch />
-      </main>
+        {/* SearchForm component */}
+        <SearchForm onSearch={handleSearch} />
 
-      <footer className="bg-white shadow mt-8">
-        <div className="max-w-4xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
-          <p className="text-center text-gray-500">GitHub User Search App</p>
+        {/* Conditional rendering for loading, error, and results */}
+        <div className="mt-8">
+          {loading && (
+            <p className="text-center text-blue-600 text-lg font-semibold">
+              Searching for users...
+            </p>
+          )}
+
+          {error && (
+            <p className="text-center text-red-600 text-lg font-semibold">
+              {error}
+            </p>
+          )}
+
+          {!loading && !error && users.length > 0 && (
+            <SearchResults users={users} />
+          )}
         </div>
-      </footer>
+
+        <footer className="mt-12 text-center text-gray-500 text-sm">
+          <p>&copy; {new Date().getFullYear()} GitHub User Search App. Built with React and Tailwind CSS.</p>
+        </footer>
+      </div>
     </div>
   );
 }

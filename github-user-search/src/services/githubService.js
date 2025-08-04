@@ -1,46 +1,48 @@
+// src/services/githubService.js
+
+// Import axios for making HTTP requests.
 import axios from 'axios';
 
-const BASE_URL = 'https://api.github.com';
+// Get the base URL from the environment variables.
+const BASE_URL = import.meta.env.VITE_APP_GITHUB_API_BASE_URL || 'https://api.github.com';
+const GITHUB_TOKEN = import.meta.env.VITE_APP_GITHUB_TOKEN; // Optional token for higher rate limits.
 
-export const fetchUserData = async (username) => {
+// Set up default headers with the token if available.
+const api = axios.create({
+  baseURL: BASE_URL,
+  headers: GITHUB_TOKEN ? { Authorization: `token ${GITHUB_TOKEN}` } : {},
+});
+
+/**
+ * Searches for GitHub users with advanced filtering.
+ * @param {string} query The main search query (e.g., username).
+ * @param {string} location The location to filter by.
+ * @param {number} minRepos The minimum number of public repositories.
+ * @returns {Promise<object>} A promise that resolves to the search results.
+ */
+export const searchUsers = async (query, location, minRepos) => {
   try {
-    const response = await axios.get(`${BASE_URL}/users/${username}`);
-    return response.data;
+    // Construct the advanced query string.
+    let fullQuery = query;
+    if (location) {
+      fullQuery += ` location:${location}`;
+    }
+    if (minRepos) {
+      fullQuery += ` repos:>=${minRepos}`;
+    }
+    
+    // Make the API call to the search endpoint.
+    const response = await api.get('/search/users', {
+      params: {
+        q: fullQuery,
+      },
+    });
+
+    // Return the items from the response data.
+    return response.data.items;
   } catch (error) {
-    throw new Error(
-      error.response?.status === 404 
-        ? 'User not found' 
-        : 'Failed to fetch user data'
-    );
-  }
-};
-
-export const searchUsers = async (username, location, minRepos) => {
-  try {
-    // Build the query string with required parameters
-    let query = `${username} in:login`;
-    if (location) query += ` location:${location}`;
-    if (minRepos) query += ` repos:>${minRepos}`;
-
-    // Use the exact endpoint format required by the checker
-    const response = await axios.get(
-      `https://api.github.com/search/users?q=${encodeURIComponent(query)}`
-    );
-
-    // Get detailed information for each user
-    const usersWithDetails = await Promise.all(
-      response.data.items.map(async (user) => {
-        const userDetails = await axios.get(`${BASE_URL}/users/${user.login}`);
-        return userDetails.data;
-      })
-    );
-
-    return usersWithDetails;
-  } catch (error) {
-    throw new Error(
-      error.response?.status === 403 
-        ? 'API rate limit exceeded' 
-        : 'Failed to search users'
-    );
+    console.error('Error searching GitHub users:', error);
+    // Throw an error with a more user-friendly message.
+    throw new Error('Failed to fetch users from GitHub. Please try again.');
   }
 };
