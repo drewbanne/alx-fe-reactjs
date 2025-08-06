@@ -11,23 +11,29 @@ function UserProfile() {
     // my-10 (default/small screens), md:my-20 (medium screens and up): responsive vertical margin
     // rounded-lg: medium rounded border
     // shadow-lg: large shadow for depth
+    // hover:shadow-xl: enhanced shadow on hover for a lifting effect
+    // transition-shadow duration-300 ease-in-out: smooth shadow transition
     // flex flex-col items-center: to center content (image, text) vertically within the card
-    <div className="bg-gray-100 sm:p-4 md:p-8 max-w-xs md:max-w-sm mx-auto my-10 md:my-20 rounded-lg shadow-lg flex flex-col items-center">
+    <div className="bg-gray-100 sm:p-4 md:p-8 max-w-xs md:max-w-sm mx-auto my-10 md:my-20 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out flex flex-col items-center">
       {/* Image (img): */}
       {/* rounded-full: makes the image circular */}
       {/* sm:w-24 sm:h-24 (small screens), md:w-36 md:h-36 (medium screens and up): responsive width and height */}
       {/* mx-auto: centers the image horizontally within its flex container */}
+      {/* hover:scale-110: makes the image grow slightly on hover */}
+      {/* transition-transform duration-300 ease-in-out: smooth scale transition */}
       <img
         src="https://via.placeholder.com/150"
         alt="User"
-        className="rounded-full sm:w-24 sm:h-24 md:w-36 md:h-36 mx-auto"
+        className="rounded-full sm:w-24 sm:h-24 md:w-36 md:h-36 mx-auto hover:scale-110 transition-transform duration-300 ease-in-out"
       />
 
       {/* Heading (h1): */}
       {/* text-lg (small screens), md:text-xl (medium screens and up): responsive font size */}
       {/* text-blue-800: deep blue color */}
       {/* my-4: vertical margin of 16px */}
-      <h1 className="text-lg md:text-xl text-blue-800 my-4">John Doe</h1>
+      {/* hover:text-blue-500: changes text color to a lighter blue on hover */}
+      {/* transition-colors duration-300 ease-in-out: smooth color transition */}
+      <h1 className="text-lg md:text-xl text-blue-800 my-4 hover:text-blue-500 transition-colors duration-300 ease-in-out">John Doe</h1>
 
       {/* Paragraph (p): */}
       {/* text-sm (small screens), md:text-base (medium screens and up): responsive font size */}
