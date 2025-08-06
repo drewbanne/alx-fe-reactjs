@@ -5,14 +5,14 @@ function UserProfile() {
   return (
     // Container (div.user-profile):
     // bg-gray-100: cool gray background
-    // p-4 (default/small screens), md:p-8 (medium screens and up): responsive padding
+    // sm:p-4 (small screens and up), md:p-8 (medium screens and up): responsive padding
     // max-w-xs (small screens), md:max-w-sm (medium screens and up): responsive max-width
     // mx-auto: center horizontally
     // my-10 (default/small screens), md:my-20 (medium screens and up): responsive vertical margin
     // rounded-lg: medium rounded border
     // shadow-lg: large shadow for depth
     // flex flex-col items-center: to center content (image, text) vertically within the card
-    <div className="bg-gray-100 p-4 md:p-8 max-w-xs md:max-w-sm mx-auto my-10 md:my-20 rounded-lg shadow-lg flex flex-col items-center">
+    <div className="bg-gray-100 sm:p-4 md:p-8 max-w-xs md:max-w-sm mx-auto my-10 md:my-20 rounded-lg shadow-lg flex flex-col items-center">
       {/* Image (img): */}
       {/* rounded-full: makes the image circular */}
       {/* w-24 h-24 (small screens), md:w-36 md:h-36 (medium screens and up): responsive width and height */}
