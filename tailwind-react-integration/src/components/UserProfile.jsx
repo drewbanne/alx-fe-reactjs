@@ -15,12 +15,12 @@ function UserProfile() {
     <div className="bg-gray-100 sm:p-4 md:p-8 max-w-xs md:max-w-sm mx-auto my-10 md:my-20 rounded-lg shadow-lg flex flex-col items-center">
       {/* Image (img): */}
       {/* rounded-full: makes the image circular */}
-      {/* w-24 h-24 (small screens), md:w-36 md:h-36 (medium screens and up): responsive width and height */}
+      {/* sm:w-24 sm:h-24 (small screens), md:w-36 md:h-36 (medium screens and up): responsive width and height */}
       {/* mx-auto: centers the image horizontally within its flex container */}
       <img
         src="https://via.placeholder.com/150"
         alt="User"
-        className="rounded-full w-24 h-24 md:w-36 md:h-36 mx-auto"
+        className="rounded-full sm:w-24 sm:h-24 md:w-36 md:h-36 mx-auto"
       />
 
       {/* Heading (h1): */}
