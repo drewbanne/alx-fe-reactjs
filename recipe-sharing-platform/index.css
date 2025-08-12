@@ -1,0 +1,7 @@
+    /* src/index.css */
+
+    /* These directives are replaced by Tailwind CSS at build time. */
+    @tailwind base;       /* Inserts Tailwind's base styles (e.g., resets) */
+    @tailwind components; /* Inserts Tailwind's component classes (e.g., for buttons, cards) */
+    @tailwind utilities;  /* Inserts all of Tailwind's utility classes (e.g., flex, pt-4, text-red-500) */
+    
