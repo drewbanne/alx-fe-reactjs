@@ -13,11 +13,8 @@ function AddRecipeForm({ onAddRecipe }) {
   // State for validation errors.
   const [errors, setErrors] = useState({});
 
-  // Function to handle form submission.
-  const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent default browser form submission.
-
-    // Perform validation checks.
+  // New: Separate function to handle form validation.
+  const validate = (title, ingredients, instructions) => {
     const newErrors = {};
     if (!title.trim()) {
       newErrors.title = 'Recipe title is required.';
@@ -28,10 +25,19 @@ function AddRecipeForm({ onAddRecipe }) {
     if (!instructions.trim()) {
       newErrors.instructions = 'Preparation steps are required.';
     }
+    return newErrors;
+  };
+
+  // Function to handle form submission.
+  const handleSubmit = (e) => {
+    e.preventDefault(); // Prevent default browser form submission.
+
+    // Call the separate validate function.
+    const validationErrors = validate(title, ingredients, instructions);
 
     // If there are any errors, update state and stop submission.
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
       return;
     }
 
