@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "title": "Spaghetti Carbonara",
+    "summary": "A classic Italian pasta dish with eggs, cheese, cured pork (guanciale or pancetta), and black pepper. Simple yet incredibly rich and satisfying.",
+    "image": "https://placehold.co/300x200/FFD700/000?text=Carbonara"
+  },
+  {
+    "id": 2,
+    "title": "Chicken Tikka Masala",
+    "summary": "Tender chunks of marinated and grilled chicken (tikka) simmered in a rich, creamy, and subtly spiced tomato-based gravy. A popular British curry house staple.",
+    "image": "https://placehold.co/300x200/DAA520/000?text=TikkaMasala"
+  },
+  {
+    "id": 3,
+    "title": "Vegetable Curry",
+    "summary": "A vibrant and aromatic medley of seasonal vegetables cooked in a fragrant coconut milk-based sauce with Indian spices. Perfect for a healthy and flavorful meal.",
+    "image": "https://placehold.co/300x200/ADFF2F/000?text=VegCurry"
+  },
+  {
+    "id": 4,
+    "title": "Classic Beef Lasagna",
+    "summary": "Layers of rich meat sauce, creamy béchamel, tender pasta, and melted cheese, baked to golden perfection. The ultimate comfort food.",
+    "image": "https://placehold.co/300x200/CD5C5C/000?text=Lasagna"
+  },
+  {
+    "id": 5,
+    "title": "Lentil Soup",
+    "summary": "A hearty and nutritious soup packed with protein-rich lentils, vegetables, and aromatic herbs. A comforting and easy-to-make dish for any day.",
+    "image": "https://placehold.co/300x200/F0E68C/000?text=LentilSoup"
+  }
+]

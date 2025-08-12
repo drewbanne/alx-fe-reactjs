@@ -1,35 +1,20 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+// src/App.jsx
+
+import React from 'react';
+// Import the new HomePage component.
+import HomePage from './components/HomePage';
+
+import './App.css'; // Keep this for any global styles, though Tailwind is primary.
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1 className="text-3xl font-bold text-blue-600 p-4 bg-gray-200 rounded-lg">Hello Tailwind!</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    // The main container for the application.
+    // Using a simple flexbox layout to push content up and allow background color to fill.
+    <div className="min-h-screen bg-gray-50 flex flex-col items-center py-8">
+      {/* Render the HomePage component */}
+      <HomePage />
+    </div>
+  );
 }
 
-export default App
+export default App;
