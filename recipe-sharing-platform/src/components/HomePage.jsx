@@ -1,6 +1,7 @@
 // src/components/HomePage.jsx
 
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom'; // Import Link for navigation
 
 // HomePage component displays a list of recipes from mock data.
 function HomePage() {
@@ -16,7 +17,6 @@ function HomePage() {
     const fetchRecipes = async () => {
       try {
         // Dynamically import the data.json file.
-        // Vite handles this import correctly for static assets.
         const response = await fetch('/data.json');
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -73,9 +73,8 @@ function HomePage() {
                 src={recipe.image}
                 alt={recipe.title}
                 className="w-full h-48 object-cover object-center rounded-t-lg"
-                // Fallback image in case the main image fails to load
                 onError={(e) => {
-                  e.target.onerror = null; // Prevents infinite loop
+                  e.target.onerror = null;
                   e.target.src = `https://placehold.co/300x200/A0A0A0/FFFFFF?text=No+Image`;
                 }}
               />
@@ -88,15 +87,13 @@ function HomePage() {
                 <p className="text-gray-700 text-base mb-4 flex-grow">
                   {recipe.summary}
                 </p>
-                {/* View Details Link */}
-                {/* For this assignment, we use a simple placeholder link.
-                    In future assignments, this would navigate to a detailed recipe page. */}
-                <a
-                  href={`#recipe-${recipe.id}`} // Placeholder for a real route
+                {/* View Details Link: Now uses React Router Link */}
+                <Link
+                  to={`/recipe/${recipe.id}`} // Correct path for React Router
                   className="inline-block self-start px-4 py-2 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 transition-colors duration-200"
                 >
                   View Details
-                </a>
+                </Link>
               </div>
             </div>
           ))}
