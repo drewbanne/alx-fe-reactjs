@@ -1,61 +1,38 @@
 // src/components/RecipeDetail.jsx
 
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom'; // Import useParams and useNavigate
+import React, { useState, useEffect } from 'react'; // Keep useState and useEffect for local component logic
+import { useParams, useNavigate } from 'react-router-dom';
 
 // RecipeDetail component displays comprehensive information for a single recipe.
-function RecipeDetail() {
-  // useParams hook extracts parameters from the URL. Here, we get the 'id'.
+// It now accepts the full 'recipes' array as a prop.
+function RecipeDetail({ recipes }) { // Accept recipes as a prop
   const { id } = useParams();
-  // useNavigate hook allows programmatic navigation.
   const navigate = useNavigate();
 
-  // State for the specific recipe.
+  // State for the specific recipe found.
   const [recipe, setRecipe] = useState(null);
-  // State for loading status.
-  const [loading, setLoading] = useState(true);
-  // State for any errors during data fetching.
+  // No separate loading state needed here as 'recipes' are passed down.
   const [error, setError] = useState(null);
 
-  // useEffect hook to fetch the recipe data when the component mounts or ID changes.
+  // useEffect hook to find the recipe from the 'recipes' prop when it changes or ID changes.
   useEffect(() => {
-    const fetchRecipe = async () => {
-      try {
-        // Fetch all recipes from data.json.
-        const response = await fetch('/data.json');
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const allRecipes = await response.json();
+    // Ensure recipes array is available before trying to find.
+    if (recipes && recipes.length > 0) {
+      const foundRecipe = recipes.find(r => r.id === parseInt(id));
 
-        // Find the specific recipe by matching the ID from the URL (which is a string)
-        // with the recipe.id (which is a number). Convert 'id' to a number for comparison.
-        const foundRecipe = allRecipes.find(r => r.id === parseInt(id));
-
-        if (foundRecipe) {
-          setRecipe(foundRecipe); // Set the found recipe to state.
-        } else {
-          setError("Recipe not found. Please check the URL."); // Set error if recipe not found.
-        }
-      } catch (err) {
-        console.error("Error fetching recipe details:", err);
-        setError("Failed to load recipe details. Please try again later."); // Set error message.
-      } finally {
-        setLoading(false); // Set loading to false once fetching is complete.
+      if (foundRecipe) {
+        setRecipe(foundRecipe);
+        setError(null); // Clear any previous errors
+      } else {
+        setRecipe(null);
+        setError("Recipe not found. Please check the URL.");
       }
-    };
-
-    fetchRecipe(); // Call the fetch function.
-  }, [id]); // Dependency array includes 'id' so data refetches if ID in URL changes.
-
-  // Conditional rendering for loading state.
-  if (loading) {
-    return (
-      <div className="text-center p-8 text-xl text-gray-700">
-        Loading recipe details... ⏳
-      </div>
-    );
-  }
+    } else {
+        // If recipes array is empty or null, it means no recipes are loaded yet or exist.
+        setRecipe(null);
+        setError("No recipes available or recipe not found.");
+    }
+  }, [id, recipes]); // Dependencies: 'id' from URL and the 'recipes' array prop.
 
   // Conditional rendering for error or recipe not found.
   if (error) {
@@ -63,7 +40,7 @@ function RecipeDetail() {
       <div className="text-center p-8 text-xl text-red-600">
         Error: {error} 😔
         <button
-          onClick={() => navigate('/')} // Button to navigate back to Home Page.
+          onClick={() => navigate('/')}
           className="mt-4 px-6 py-2 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 transition-colors duration-200"
         >
           Back to Recipes
@@ -72,11 +49,16 @@ function RecipeDetail() {
     );
   }
 
-  // If recipe is not found after loading and no explicit error, redirect to home.
-  // This handles cases where ID might be invalid but no fetch error occurred.
+  // If no recipe found after effect, return a loading message or null (if navigating away).
+  // If recipe is null but no explicit error, implies not found yet or navigating.
   if (!recipe) {
-    navigate('/');
-    return null; // Don't render anything while navigating.
+    // Optionally, navigate back if not found or display a loading spinner for a moment if data is still processing.
+    // For now, if no recipe is found and no error, assume it's still loading or an invalid ID will be caught by the error message.
+    return (
+        <div className="text-center p-8 text-xl text-gray-700">
+            Fetching recipe details...
+        </div>
+    );
   }
 
   return (
@@ -91,7 +73,6 @@ function RecipeDetail() {
           src={recipe.image}
           alt={recipe.title}
           className="w-full h-64 md:h-96 object-cover object-center rounded-lg mb-6 shadow-md"
-          // Fallback image in case of error
           onError={(e) => {
             e.target.onerror = null;
             e.target.src = `https://placehold.co/800x600/A0A0A0/FFFFFF?text=No+Image`;
@@ -108,15 +89,10 @@ function RecipeDetail() {
           <h2 className="text-2xl md:text-3xl font-bold text-gray-800 border-b-2 border-blue-500 pb-2 mb-4">
             Ingredients 📝
           </h2>
-          <ul className="list-disc list-inside text-gray-700 text-lg md:text-xl space-y-2">
-            {/* Example: Replace with actual ingredients if your data.json supported it */}
-            <li>200g spaghetti</li>
-            <li>100g guanciale (or pancetta)</li>
-            <li>2 large eggs</li>
-            <li>50g Pecorino Romano cheese, grated</li>
-            <li>Freshly ground black pepper</li>
-            <li>A pinch of salt (for pasta water)</li>
-          </ul>
+          {/* Display ingredients from the recipe object */}
+          <p className="text-gray-700 text-lg md:text-xl space-y-2 whitespace-pre-line">
+            {recipe.ingredients}
+          </p>
         </div>
 
         {/* Instructions Section */}
@@ -124,20 +100,15 @@ function RecipeDetail() {
           <h2 className="text-2xl md:text-3xl font-bold text-gray-800 border-b-2 border-blue-500 pb-2 mb-4">
             Instructions 👩‍🍳
           </h2>
-          <ol className="list-decimal list-inside text-gray-700 text-lg md:text-xl space-y-3">
-            {/* Example: Replace with actual instructions if your data.json supported it */}
-            <li>Bring a large pot of salted water to a boil. Add spaghetti and cook according to package directions until al dente.</li>
-            <li>While pasta cooks, finely chop the guanciale. In a separate pan, cook guanciale over medium heat until crisp. Remove from heat and set aside, reserving a tablespoon of rendered fat.</li>
-            <li>In a bowl, whisk eggs, grated Pecorino Romano, and a generous amount of black pepper until well combined.</li>
-            <li>Drain the spaghetti, reserving about a cup of pasta water. Immediately add the hot spaghetti to the pan with the guanciale and reserved fat. Toss quickly.</li>
-            <li>Pour the egg mixture over the pasta, stirring vigorously to coat the pasta. Add a little pasta water if needed to create a creamy sauce. Continue stirring until the sauce emulsifies and coats the pasta.</li>
-            <li>Serve immediately, garnished with extra Pecorino Romano and black pepper. Enjoy!</li>
-          </ol>
+          {/* Display instructions from the recipe object */}
+          <p className="text-gray-700 text-lg md:text-xl space-y-3 whitespace-pre-line">
+            {recipe.instructions}
+          </p>
         </div>
 
         {/* Back button */}
         <button
-          onClick={() => navigate('/')} // Navigate back to the home page.
+          onClick={() => navigate('/')}
           className="mt-10 px-6 py-3 bg-gray-600 text-white font-semibold rounded-md hover:bg-gray-700 transition-colors duration-200 block mx-auto"
         >
           Back to All Recipes
