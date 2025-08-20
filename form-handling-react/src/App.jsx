@@ -1,7 +1,7 @@
 // src/App.jsx
 
 import React from 'react';
-import FormikForm from './components/FormikForm.js'; // Import the FormikForm component (note the .js extension)
+import FormikForm from './components/FormikForm.js'; // Import the FormikForm component
 
 import './App.css'; // You might want to remove this if not using specific global styles beyond Tailwind
 
