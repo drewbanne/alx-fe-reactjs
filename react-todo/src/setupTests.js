@@ -1,2 +1,2 @@
-// src/setupTests.js
-import '@testing-library/jest-dom';
+New-Item -ItemType File setupTests.js -ErrorAction SilentlyContinue
+notepad setupTests.js
