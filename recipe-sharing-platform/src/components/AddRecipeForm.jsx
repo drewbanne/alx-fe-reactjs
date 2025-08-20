@@ -13,7 +13,7 @@ function AddRecipeForm({ onAddRecipe }) {
   // State for validation errors.
   const [errors, setErrors] = useState({});
 
-  // New: Separate function to handle form validation.
+  // Separate function to handle form validation.
   const validate = (title, ingredients, instructions) => {
     const newErrors = {};
     if (!title.trim()) {
@@ -32,13 +32,17 @@ function AddRecipeForm({ onAddRecipe }) {
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent default browser form submission.
 
+    setErrors({}); // Clear any previous errors before validation.
+    // Removed setSubmissionMessage here as it's not declared in this component.
+    // If you had a submission message state in this component, you would clear it here.
+
     // Call the separate validate function.
     const validationErrors = validate(title, ingredients, instructions);
 
     // If there are any errors, update state and stop submission.
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
-      return;
+      return; // Stop submission if there are errors.
     }
 
     // If validation passes, create a new recipe object.
