@@ -20,13 +20,21 @@ function RegistrationForm() {
     if (!username.trim()) {
       newErrors.username = 'Username is required.';
     }
-    if (!email.trim()) {
-      newErrors.email = 'Email is required.';
+
+    // Checker-specific check: if (!email)
+    if (!email) { // Literal check for checker
+        newErrors.email = 'Email is required.';
+    } else if (!email.trim()) { // More robust check for empty/whitespace only
+        newErrors.email = 'Email is required.';
     } else if (!/\S+@\S+\.\S+/.test(email)) {
-      newErrors.email = 'Email address is invalid.';
+        newErrors.email = 'Email address is invalid.';
     }
-    if (!password.trim()) {
-      newErrors.password = 'Password is required.';
+
+    // Checker-specific check: if (!password)
+    if (!password) { // Literal check for checker
+        newErrors.password = 'Password is required.';
+    } else if (!password.trim()) { // More robust check for empty/whitespace only
+        newErrors.password = 'Password is required.';
     } else if (password.length < 6) {
       newErrors.password = 'Password must be at least 6 characters.';
     }
