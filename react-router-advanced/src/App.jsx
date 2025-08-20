@@ -9,7 +9,8 @@ import './App.css'; // Global styles (if any)
 import { AuthProvider, useAuth } from './AuthContext';
 
 // Import components for routing
-import Profile from './Profile'; // Profile component (handles its own nested routes)
+// IMPORTANT: Profile is now imported from 'src/components/Profile'
+import Profile from './components/Profile'; // Profile component (handles its own nested routes)
 import BlogPost from './components/BlogPost'; // Dynamic Blog Post component
 import ProtectedRoute from './components/ProtectedRoute'; // Protected route component
 
