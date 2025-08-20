@@ -1,4 +1,4 @@
-// src/components/FormikForm.jsx
+// src/components/FormikForm.js
 
 import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik'; // Import Formik components
@@ -36,7 +36,7 @@ function FormikForm() {
       const response = await fetch('https://api.example.com/register', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application',
         },
         body: JSON.stringify(values), // Formik 'values' directly contains form data.
       });
