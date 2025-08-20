@@ -18,7 +18,27 @@ function PostsComponent() {
   // useQuery hook manages the data fetching lifecycle.
   // 'posts' is a unique query key. It's used for caching and identifying this specific query.
   // 'fetchPosts' is the query function that actually fetches the data.
-  const { data, isLoading, isError, error, refetch, isFetching } = useQuery('posts', fetchPosts);
+  // The third argument is an options object for advanced configurations.
+  const { data, isLoading, isError, error, refetch, isFetching } = useQuery(
+    'posts',
+    fetchPosts,
+    {
+      // cacheTime: How long unused/inactive queries remain in the cache.
+      // Default is 5 minutes (300_000 ms). Setting to 600_000 ms (10 minutes).
+      cacheTime: 600_000,
+      // staleTime: How long data is considered "fresh".
+      // Data that is fresh will not refetch on mount or window focus.
+      // Default is 0. Setting to 1 minute (60_000 ms) means data is fresh for 1 min.
+      staleTime: 60_000,
+      // refetchOnWindowFocus: Whether to refetch query automatically when the window regains focus.
+      // Default is true. Explicitly setting to true.
+      refetchOnWindowFocus: true,
+      // keepPreviousData: When true, the previous data is kept while the new data is fetching.
+      // This prevents the UI from "flickering" to a loading state when refetching.
+      // Default is false. Explicitly setting to true for a smoother UX.
+      keepPreviousData: true,
+    }
+  );
 
   // --- Loading State ---
   if (isLoading) {
