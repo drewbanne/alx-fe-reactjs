@@ -1,0 +1,8 @@
+// .babelrc
+
+{
+  "presets": [
+    "@babel/preset-env",  // For compiling modern JavaScript down to older versions
+    "@babel/preset-react" // For compiling JSX into JavaScript
+  ]
+}
